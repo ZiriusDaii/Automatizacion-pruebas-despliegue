@@ -10,6 +10,18 @@ jobs:
   test:
     runs-on: ubuntu-latest
 
+    services:
+      mysql:
+        image: mysql:8.0
+        env:
+          MYSQL_ROOT_PASSWORD: root
+          MYSQL_DATABASE: test_db
+          MYSQL_USER: test_user
+          MYSQL_PASSWORD: test_pass
+        ports:
+          - 3306:3306
+        options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
+
     steps:
       - name: Descargar código
         uses: actions/checkout@v4
@@ -31,6 +43,14 @@ jobs:
           DJANGO_SETTINGS_MODULE: winespa.settings
           PYTHONPATH: ${{ github.workspace }}
 
+      - name: Esperar MySQL
+        run: |
+          while ! mysqladmin ping -h"127.0.0.1" -P3306 --silent; do
+            echo "Esperando MySQL..."
+            sleep 2
+          done
+          echo "MySQL está listo!"
+
       - name: Ejecutar pruebas
         run: |
           python -m pytest api/usuarios/test_usuarios.py -v
@@ -38,3 +58,8 @@ jobs:
           DJANGO_SETTINGS_MODULE: winespa.settings
           PYTHONPATH: ${{ github.workspace }}
           DEBUG: "True"
+          DB_NAME: test_db
+          DB_USER: test_user
+          DB_PASSWORD: test_pass
+          DB_HOST: 127.0.0.1
+          DB_PORT: 3306
