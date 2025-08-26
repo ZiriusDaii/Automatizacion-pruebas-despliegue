@@ -12,7 +12,7 @@ jobs:
 
     steps:
       - name: Descargar código
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Configurar Python
         uses: actions/setup-python@v4
@@ -21,7 +21,20 @@ jobs:
 
       - name: Instalar dependencias
         run: |
+          python -m pip install --upgrade pip
           pip install -r requirements.txt
 
+      - name: Verificar configuración Django
+        run: |
+          python -c "import django; print('Django version:', django.get_version())"
+        env:
+          DJANGO_SETTINGS_MODULE: winespa.settings
+          PYTHONPATH: ${{ github.workspace }}
+
       - name: Ejecutar pruebas
-        run: pytest
+        run: |
+          python -m pytest api/usuarios/test_usuarios.py -v
+        env:
+          DJANGO_SETTINGS_MODULE: winespa.settings
+          PYTHONPATH: ${{ github.workspace }}
+          DEBUG: "True"
