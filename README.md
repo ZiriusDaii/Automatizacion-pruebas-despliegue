@@ -379,21 +379,11 @@ python -m pytest --cache-clear
 - Confirma que el archivo YAML tenga la sintaxis correcta
 - Revisa los logs del workflow en GitHub
 
-## 🤝 Contribución
 
-1. Fork el proyecto
-2. Crea una rama para tu feature (`git checkout -b feature/AmazingFeature`)
-3. Commit tus cambios (`git commit -m 'Add some AmazingFeature'`)
-4. Push a la rama (`git push origin feature/AmazingFeature`)
-5. Abre un Pull Request
-
-## 📄 Licencia
-
-Este proyecto está bajo la Licencia MIT. Ver el archivo `LICENSE` para más detalles.
 
 ## 👥 Autores
 
-- **Tu Nombre** - *Desarrollo inicial* - [TuUsuario](https://github.com/TuUsuario)
+- *Samuel Henao Lara* -  - [ZiriusDaii](https://github.com/ZiriusDaii)
 
 ## 🙏 Agradecimientos
 
