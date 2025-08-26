@@ -29,12 +29,4 @@ jobs:
         python -m pytest api/usuarios/test_usuarios.py -v --tb=short
       env:
         DJANGO_SETTINGS_MODULE: winespa.settings
-
-    - name: Upload test results
-      uses: actions/upload-artifact@v4
-      if: always()
-      with:
-        name: test-results
-        path: |
-          .pytest_cache/
-          test-results/
+        PYTHONPATH: ${{ github.workspace }}
