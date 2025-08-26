@@ -15,9 +15,9 @@ jobs:
         image: mysql:8.0
         env:
           MYSQL_ROOT_PASSWORD: root
-          MYSQL_DATABASE: test_db
-          MYSQL_USER: test_user
-          MYSQL_PASSWORD: test_pass
+          MYSQL_DATABASE: winespaapi
+          MYSQL_USER: wine
+          MYSQL_PASSWORD: tech
         ports:
           - 3306:3306
         options: --health-cmd="mysqladmin ping" --health-interval=10s --health-timeout=5s --health-retries=3
@@ -42,6 +42,11 @@ jobs:
         env:
           DJANGO_SETTINGS_MODULE: winespa.settings
           PYTHONPATH: ${{ github.workspace }}
+          DB_NAME: winespaapi
+          DB_USER: wine
+          DB_PASSWORD: tech
+          DB_HOST: 127.0.0.1
+          DB_PORT: 3306
 
       - name: Esperar MySQL
         run: |
@@ -58,8 +63,8 @@ jobs:
           DJANGO_SETTINGS_MODULE: winespa.settings
           PYTHONPATH: ${{ github.workspace }}
           DEBUG: "True"
-          DB_NAME: test_db
-          DB_USER: test_user
-          DB_PASSWORD: test_pass
+          DB_NAME: winespaapi
+          DB_USER: wine
+          DB_PASSWORD: tech
           DB_HOST: 127.0.0.1
           DB_PORT: 3306
