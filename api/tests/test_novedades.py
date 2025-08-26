@@ -26,10 +26,11 @@ class NovedadTest(TestCase):
             manicurista=self.manicurista,
             fecha=self.manana,
             estado='ausente',
-            tipo_ausencia='completa',
-            hora_entrada=None,
-            hora_salida=None
+            tipo_ausencia='completa'
         )
         self.assertEqual(novedad.estado, 'ausente')
         self.assertEqual(novedad.tipo_ausencia, 'completa')
         self.assertEqual(novedad.fecha, self.manana)
+        self.assertIsNone(novedad.hora_entrada)
+        self.assertIsNone(novedad.hora_inicio_ausencia)
+        self.assertIsNone(novedad.hora_fin_ausencia)
