@@ -24,9 +24,18 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements.txt
 
-    - name: Run tests
+    - name: Verify Django setup
       run: |
-        python -m pytest api/usuarios/test_usuarios.py -v --tb=short
+        python -c "import django; print('Django version:', django.get_version())"
+        python -c "import os; os.environ.setdefault('DJANGO_SETTINGS_MODULE', 'winespa.settings'); django.setup(); print('Django setup successful')"
       env:
         DJANGO_SETTINGS_MODULE: winespa.settings
         PYTHONPATH: ${{ github.workspace }}
+
+    - name: Run tests
+      run: |
+        python -m pytest api/usuarios/test_usuarios.py -v --tb=long
+      env:
+        DJANGO_SETTINGS_MODULE: winespa.settings
+        PYTHONPATH: ${{ github.workspace }}
+        DEBUG: "True"
